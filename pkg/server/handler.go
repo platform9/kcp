@@ -228,6 +228,18 @@ func WithInClusterServiceAccountRequestRewrite(handler http.Handler) http.Handle
 	})
 }
 
+func WithLegacyApiserverRedirect(handler http.Handler, targetCluster string) http.Handler {
+	if len(targetCluster) == 0 {
+		return handler
+	}
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if !strings.HasPrefix(req.URL.Path, "/clusters") {
+			req.URL.Path = path.Join("/clusters", targetCluster, req.URL.Path)
+		}
+		handler.ServeHTTP(w, req)
+	})
+}
+
 // WithRequestIdentity checks list/watch requests for an APIExport identity for the resource in the path.
 // If it finds one (e.g. /api/v1/services:identityabcd1234/default/my-service), it places the identity from the path
 // to the context, updates the request to remove the identity from the path, and updates requestInfo.Resource to also

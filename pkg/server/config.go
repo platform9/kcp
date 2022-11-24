@@ -377,6 +377,7 @@ func NewConfig(opts *kcpserveroptions.CompletedOptions) (*Config, error) {
 		apiHandler = WithInClusterServiceAccountRequestRewrite(apiHandler)
 		apiHandler = kcpfilters.WithAcceptHeader(apiHandler)
 		apiHandler = WithUserAgent(apiHandler)
+		apiHandler = WithLegacyApiserverRedirect(apiHandler, opts.Extra.LegacyApiserverRedirect)
 
 		return apiHandler
 	}

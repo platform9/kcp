@@ -64,6 +64,7 @@ type ExtraOptions struct {
 	ShardVirtualWorkspaceURL string
 	DiscoveryPollInterval    time.Duration
 	ExperimentalBindFreePort bool
+	LegacyApiserverRedirect  string
 
 	BatteriesIncluded []string
 }
@@ -108,6 +109,7 @@ func NewOptions(rootDir string) *Options {
 			ShardName:                "root",
 			DiscoveryPollInterval:    60 * time.Second,
 			ExperimentalBindFreePort: false,
+			LegacyApiserverRedirect:  "",
 			BatteriesIncluded:        batteries.Defaults.List(),
 		},
 	}
@@ -174,6 +176,7 @@ func (o *Options) rawFlags() cliflag.NamedFlagSets {
 	fs.StringVar(&o.Extra.ShardName, "shard-name", o.Extra.ShardName, "A name of this kcp shard. Defaults to the \"root\" name.")
 	fs.StringVar(&o.Extra.ShardVirtualWorkspaceURL, "shard-virtual-workspace-url", o.Extra.ShardVirtualWorkspaceURL, "An external URL address of a virtual workspace server associated with this shard. Defaults to shard's base address.")
 	fs.StringVar(&o.Extra.RootDirectory, "root-directory", o.Extra.RootDirectory, "Root directory.")
+	fs.StringVar(&o.Extra.LegacyApiserverRedirect, "legacy-apiserver-redirect", o.Extra.LegacyApiserverRedirect, "If not empty, requests to the legacy apiserver endpoints will be redirected to the specified workspace.")
 
 	fs.BoolVar(&o.Extra.ExperimentalBindFreePort, "experimental-bind-free-port", o.Extra.ExperimentalBindFreePort, "Bind to a free port. --secure-port must be 0. Use the admin.kubeconfig to extract the chosen port.")
 	fs.MarkHidden("experimental-bind-free-port") //nolint:errcheck

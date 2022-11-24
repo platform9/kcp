@@ -138,6 +138,7 @@ var (
 		"shard-kubeconfig-file",       // Kubeconfig holding admin(!) credentials to peer kcp shards.
 		"root-shard-kubeconfig-file",  // Kubeconfig holding admin(!) credentials to the root kcp shard.
 		"experimental-bind-free-port", // Bind to a free port. --secure-bind-port must be 0. Use the admin.kubeconfig to extract the chosen port.
+		"legacy-apiserver-redirect",   // If not empty, requests to the legacy apiserver endpoints will be redirected to the specified workspace.
 		"batteries-included",          // A list of batteries included (= default objects that might be unwanted in production, but very helpful in trying out kcp or development).
 
 		// secure serving flags
